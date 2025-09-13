@@ -62,12 +62,13 @@ export async function Header() {
 
           {/* Mobile Navigation */}
           <Sheet.Sheet>
+            <Sheet.SheetTitle></Sheet.SheetTitle>
             <Sheet.SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
               </Button>
             </Sheet.SheetTrigger>
-            <Sheet.SheetContent side="right">
+            <Sheet.SheetContent side="right" className="pl-5 pt-5">
               <nav className="flex flex-col space-y-4">
                 {menuItems.map((item) => (
                   <Link

@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "create-admin": "tsx scripts/create-admin.ts"
+    "create-admin": "tsx scripts/create-admin.ts",
+    "migrate-advertisements": "tsx scripts/migrate-advertisements.ts",
+    "test-advertisements": "tsx scripts/test-advertisements.ts",
+    "test-real-advertisements": "tsx scripts/test-real-advertisements.ts",
+    "test-ml-advertisement": "tsx scripts/test-ml-advertisement.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",

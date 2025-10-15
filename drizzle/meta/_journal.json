@@ -8,6 +8,20 @@
       "when": 1757757024947,
       "tag": "0000_broad_supernaut",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1758432600253,
+      "tag": "0001_lovely_machine_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758433000000,
+      "tag": "0002_advertisements_table",
+      "breakpoints": true
     }
   ]
 }

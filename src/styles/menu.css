@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .menu-item {
+    @apply block px-4 py-2 rounded-sm transition-colors duration-200;
+  }
+
+  .menu-item-blue:hover {
+    background-color: #1e73be15;
+  }
+
+  .menu-item-red:hover {
+    background-color: #d2232a15;
+  }
+
+  .menu-item-green:hover {
+    background-color: #2e7d3215;
+  }
+
+  .menu-item-purple:hover {
+    background-color: #9c27b015;
+  }
+
+  .menu-item-orange:hover {
+    background-color: #ff572215;
+  }
+
+  .menu-item-gray:hover {
+    background-color: #75757515;
+  }
+}

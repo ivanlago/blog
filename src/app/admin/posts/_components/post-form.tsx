@@ -12,18 +12,32 @@ async function uploadImageToCloudinary(file: File) {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch("/api/upload", {
-    method: "POST",
-    body: formData,
-  });
+  try {
+    const response = await fetch("/api/cloudinary", {
+      method: "POST",
+      body: formData,
+      cache: "no-cache",
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error("Upload error:", errorText);
-    throw new Error(`Falha no upload da imagem: ${response.status}`);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Upload error:", errorText);
+      throw new Error(
+        `Falha no upload da imagem: ${response.status} - ${errorText}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (!data.url) {
+      throw new Error("URL da imagem não retornada pelo servidor");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Erro ao fazer upload da imagem:", error);
+    throw error;
   }
-
-  return response.json();
 }
 
 const postSchema = z.object({

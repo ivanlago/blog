@@ -13,7 +13,6 @@ import {
 export const categoryEnum = pgEnum("category", [
   "suplementos_naturais",
   "fitness_emagrecimento",
-  "saude_mental_sono",
   "cuidados_corpo",
   "alimentacao_saudavel",
 ]);
@@ -31,6 +30,18 @@ export const posts = pgTable("posts", {
   category: categoryEnum("category").notNull(),
   authorId: varchar("author_id", { length: 255 }).notNull(),
   published: boolean("published").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Advertisements table
+export const advertisements = pgTable("advertisements", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  imageUrl: varchar("image_url", { length: 255 }).notNull(),
+  productUrl: varchar("product_url", { length: 255 }).notNull(),
+  category: categoryEnum("category").notNull(),
+  isFeatured: boolean("is_featured").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -54,6 +65,10 @@ export const postsRelations = relations(posts, ({ one }) => ({
     fields: [posts.authorId],
     references: [users.id],
   }),
+}));
+
+export const advertisementsRelations = relations(advertisements, ({ one }) => ({
+  // Advertisements don't have authors in this implementation
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({

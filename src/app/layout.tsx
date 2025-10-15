@@ -29,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-white`}
       >
         <AuthSessionProvider>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 md:px-8">
+            {children}
+          </main>
           <Footer />
         </AuthSessionProvider>
       </body>

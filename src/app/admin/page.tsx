@@ -7,7 +7,7 @@ import { posts } from "@/db/schema";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, FileTextIcon, TagIcon } from "lucide-react";
 
 export default async function AdminPage() {
   const session = await getServerSession(config);
@@ -21,16 +21,57 @@ export default async function AdminPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Gerenciar Posts</h1>
-        <Link href="/admin/posts/new">
-          <Button>
-            <PlusIcon className="h-4 w-4 mr-2" />
-            Novo Post
-          </Button>
-        </Link>
+        <h1 className="text-3xl font-bold">Painel de Administração</h1>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+          <div className="flex items-center mb-4">
+            <FileTextIcon className="h-8 w-8 text-blue-600 mr-3" />
+            <h2 className="text-xl font-bold">Gerenciar Posts</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Crie e edite postagens do blog
+          </p>
+          <div className="flex space-x-3">
+            <Link href="/admin/posts/new">
+              <Button>
+                <PlusIcon className="h-4 w-4 mr-2" />
+                Novo Post
+              </Button>
+            </Link>
+            <Link href="/admin/posts">
+              <Button variant="outline">Ver todos</Button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+          <div className="flex items-center mb-4">
+            <TagIcon className="h-8 w-8 text-green-600 mr-3" />
+            <h2 className="text-xl font-bold">Gerenciar Anúncios</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Crie e edite anúncios de produtos afiliados
+          </p>
+          <div className="flex space-x-3">
+            <Link href="/admin/advertisements/new">
+              <Button>
+                <PlusIcon className="h-4 w-4 mr-2" />
+                Novo Anúncio
+              </Button>
+            </Link>
+            <Link href="/admin/advertisements">
+              <Button variant="outline">Ver todos</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h2 className="text-xl font-bold">Últimos Posts</h2>
+        </div>
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>

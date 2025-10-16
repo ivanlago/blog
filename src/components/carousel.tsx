@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { nanoid } from "nanoid";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CarouselProps {
   children: React.ReactNode[];
@@ -8,6 +9,7 @@ interface CarouselProps {
   showIndicators?: boolean;
   autoPlay?: boolean;
   autoPlayInterval?: number;
+  hideIndicators?: boolean;
 }
 
 export function Carousel({
@@ -16,25 +18,22 @@ export function Carousel({
   showIndicators = true,
   autoPlay = false,
   autoPlayInterval = 5000,
+  hideIndicators = false,
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === children.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex === children.length - 1 ? 0 : prevIndex + 1));
+  }, [children.length]);
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? children.length - 1 : prevIndex - 1
-    );
-  };
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? children.length - 1 : prevIndex - 1));
+  }, [children.length]);
 
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
-  };
+  }, []);
 
   // Auto-play functionality
   useEffect(() => {
@@ -45,7 +44,7 @@ export function Carousel({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, currentIndex]);
+  }, [autoPlay, autoPlayInterval, nextSlide]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -59,7 +58,7 @@ export function Carousel({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [nextSlide, prevSlide]);
 
   if (children.length === 0) {
     return null;
@@ -68,7 +67,7 @@ export function Carousel({
   return (
     <div className="relative w-full" ref={carouselRef}>
       {title && <h2 className="text-2xl font-bold mb-6">{title}</h2>}
-      
+
       {/* Carousel container */}
       <div className="relative overflow-hidden rounded-lg">
         <div
@@ -76,7 +75,7 @@ export function Carousel({
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {children.map((child, index) => (
-            <div key={index} className="w-full flex-shrink-0">
+            <div key={`slide-${index}-${nanoid()}`} className="w-full flex-shrink-0">
               {child}
             </div>
           ))}
@@ -87,6 +86,7 @@ export function Carousel({
       {children.length > 1 && (
         <>
           <button
+            type="button"
             onClick={prevSlide}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
             aria-label="Previous slide"
@@ -97,7 +97,10 @@ export function Carousel({
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              role="img"
+              aria-label="Previous slide arrow"
             >
+              <title>Previous slide arrow</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -107,6 +110,7 @@ export function Carousel({
             </svg>
           </button>
           <button
+            type="button"
             onClick={nextSlide}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
             aria-label="Next slide"
@@ -117,24 +121,23 @@ export function Carousel({
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
+              role="img"
+              aria-label="Next slide arrow"
+            >
+              <title>Next slide arrow</title>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </>
       )}
 
       {/* Indicators */}
-      {showIndicators && children.length > 1 && (
+      {showIndicators && !hideIndicators && children.length > 1 && (
         <div className="flex justify-center mt-4 space-x-2">
           {children.map((_, index) => (
             <button
-              key={index}
+              type="button"
+              key={`indicator-${index}-${nanoid()}`}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full ${
                 currentIndex === index ? "bg-blue-600" : "bg-gray-300"

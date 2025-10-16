@@ -15,6 +15,15 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, priority = false }: PostCardProps) {
+  // Map database category values to URL slugs
+  const categorySlugMap: Record<string, string> = {
+    suplementos_naturais: "suplementos-naturais",
+    fitness_emagrecimento: "fitness-emagrecimento",
+    saude_mental_sono: "saude-mental-sono",
+    cuidados_corpo: "cuidados-corpo",
+    alimentacao_saudavel: "alimentacao-saudavel",
+  };
+
   const categoryMap: Record<string, string> = {
     suplementos_naturais: "Suplementos Naturais",
     fitness_emagrecimento: "Fitness e Emagrecimento",
@@ -23,12 +32,12 @@ export function PostCard({ post, priority = false }: PostCardProps) {
     alimentacao_saudavel: "Alimentação Saudável",
   };
 
+  // Get the correct category slug for URLs
+  const categorySlug = categorySlugMap[post.category] || post.category;
+
   return (
     <article className="group relative flex flex-col space-y-2">
-      <Link
-        href={`/post/${post.id}`}
-        className="relative aspect-[16/9] overflow-hidden rounded-lg"
-      >
+      <Link href={`/post/${post.id}`} className="relative aspect-[16/9] overflow-hidden rounded-lg">
         {post.mainImage ? (
           <Image
             src={post.mainImage}
@@ -46,23 +55,16 @@ export function PostCard({ post, priority = false }: PostCardProps) {
       </Link>
       <div className="flex flex-col space-y-1">
         <Link
-          href={`/categoria/${post.category}`}
+          href={`/categoria/${categorySlug}`}
           className="text-sm font-medium text-blue-600 hover:text-blue-700"
         >
           {categoryMap[post.category]}
         </Link>
-        <Link
-          href={`/post/${post.id}`}
-          className="space-y-1 group-hover:text-blue-600"
-        >
+        <Link href={`/post/${post.id}`} className="space-y-1 group-hover:text-blue-600">
           <h2 className="line-clamp-2 text-lg font-semibold leading-snug tracking-tight">
             {post.title}
           </h2>
-          {post.subtitle && (
-            <p className="line-clamp-2 text-sm text-gray-600">
-              {post.subtitle}
-            </p>
-          )}
+          {post.subtitle && <p className="line-clamp-2 text-sm text-gray-600">{post.subtitle}</p>}
         </Link>
         <p className="text-sm text-gray-500">{formatDate(post.createdAt)}</p>
       </div>

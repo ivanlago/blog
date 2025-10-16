@@ -20,6 +20,32 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Code Quality Tools
+
+This project uses [Biome](https://biomejs.dev/) for code formatting, linting, and import organization. Biome has replaced ESLint and Prettier in this project.
+
+### Available Commands
+
+- `npm run lint` - Check for formatting and linting issues
+- `npm run lint:fix` - Automatically fix formatting and linting issues
+- `npm run format` - Format all files in the project
+
+### VS Code Integration
+
+To get full Biome integration with VS Code (formatting on save, error highlighting, etc.):
+
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X)
+3. Search for "Biome"
+4. Install the official "Biome" extension by "BiomeJS"
+
+The extension ID is: `biomejs.biome`
+
+With the Biome VS Code extension installed:
+- Code will be automatically formatted on save
+- Linting errors will be shown in real-time
+- Import sorting will be applied automatically
+
 ## Gerenciamento de Anúncios
 
 Este blog inclui um sistema de gerenciamento de anúncios para produtos afiliados. Você pode:

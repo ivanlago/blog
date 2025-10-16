@@ -1,9 +1,11 @@
 import { desc, eq } from "drizzle-orm";
-import db from "@/db";
-import { posts, advertisements, categoryEnum } from "@/db/schema";
-import { PostCard } from "@/components/post-card";
 import { AdvertisementCard } from "@/components/advertisement-card";
 import { Carousel } from "@/components/carousel";
+import { CarouselItemWithText } from "@/components/carousel-item-with-text";
+import { Hero } from "@/components/hero";
+import { PostCard } from "@/components/post-card";
+import db from "@/db";
+import { advertisements, type categoryEnum, posts } from "@/db/schema";
 
 type CategoryId = (typeof categoryEnum.enumValues)[number];
 
@@ -85,6 +87,15 @@ async function getFeaturedAdvertisements(limit = 2) {
 }
 
 export default async function HomePage() {
+  // Map database category values to URL slugs
+  const categorySlugMap: Record<string, string> = {
+    suplementos_naturais: "suplementos-naturais",
+    fitness_emagrecimento: "fitness-emagrecimento",
+    saude_mental_sono: "saude-mental-sono",
+    cuidados_corpo: "cuidados-corpo",
+    alimentacao_saudavel: "alimentacao-saudavel",
+  };
+
   const categories: Category[] = [
     { id: "suplementos_naturais", title: "Suplementos Naturais" },
     { id: "fitness_emagrecimento", title: "Fitness e Emagrecimento" },
@@ -102,7 +113,7 @@ export default async function HomePage() {
       ...category,
       posts: await getLatestPostsByCategory(category.id),
       advertisements: await getAdvertisementsByCategory(category.id, 4),
-    }))
+    })),
   );
 
   // Get featured advertisements
@@ -110,66 +121,14 @@ export default async function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <section className="mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-          Para Sua Saúde
-        </h1>
-        <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto">
-          Seu guia completo para uma vida mais saudável e equilibrada
-        </p>
-      </section>
-
-      {/* Carousels for latest posts and advertisements in a single row */}
-      <section className="mb-16">
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Carousel for latest posts - 2/3 width */}
-          <div className="w-full md:w-2/3">
-            <Carousel
-              title="Últimas Postagens"
-              autoPlay={true}
-              autoPlayInterval={7000}
-            >
-              {latestPosts.map((post) => (
-                <div key={post.id} className="p-4 flex flex-col h-full">
-                  <div className="flex-grow">
-                    <PostCard post={post} />
-                  </div>
-                </div>
-              ))}
-            </Carousel>
-          </div>
-
-          {/* Carousel for latest advertisements - 1/3 width */}
-          <div className="w-full md:w-1/3">
-            <Carousel
-              title="Últimos Anúncios"
-              autoPlay={true}
-              autoPlayInterval={7000}
-            >
-              {latestAdvertisements.map((advertisement) => (
-                <div
-                  key={advertisement.id}
-                  className="p-4 flex flex-col h-full"
-                >
-                  <div className="flex-grow">
-                    <AdvertisementCard advertisement={advertisement} />
-                  </div>
-                </div>
-              ))}
-            </Carousel>
-          </div>
-        </div>
-      </section>
+      <Hero latestPosts={latestPosts} latestAdvertisements={latestAdvertisements} />
 
       {/* Featured advertisements */}
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-6">Anúncios em Destaque</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {featuredAdvertisements.map((advertisement) => (
-            <AdvertisementCard
-              key={advertisement.id}
-              advertisement={advertisement}
-            />
+            <AdvertisementCard key={advertisement.id} advertisement={advertisement} />
           ))}
         </div>
       </section>
@@ -180,7 +139,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">{category.title}</h2>
               <a
-                href={`/categoria/${category.id}`}
+                href={`/categoria/${categorySlugMap[category.id]}`}
                 className="text-blue-600 hover:text-blue-700"
               >
                 Ver mais →
@@ -197,10 +156,7 @@ export default async function HomePage() {
             {/* Category advertisements */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
               {category.advertisements.map((advertisement) => (
-                <AdvertisementCard
-                  key={advertisement.id}
-                  advertisement={advertisement}
-                />
+                <AdvertisementCard key={advertisement.id} advertisement={advertisement} />
               ))}
             </div>
           </section>

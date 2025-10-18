@@ -22,14 +22,7 @@ interface HeroProps {
 
 export function Hero({ latestPosts, latestAdvertisements }: HeroProps) {
   return (
-    <section className="mb-16">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">Para Sua Saúde</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Seu guia completo para uma vida mais saudável e equilibrada
-        </p>
-      </div>
-
+    <section className="my-8">
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-2/3">
           <Carousel

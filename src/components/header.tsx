@@ -52,12 +52,19 @@ export function Header() {
               alt="Logo"
               width={150}
               height={150}
-              className="mr-20 py-2"
+              className="mr-10 py-2"
             />
           </Link>
 
+          <div className="flex flex-col">
+            <p className="text-gray-500 text-sm whitespace-nowrap mr-10">
+              Seu guia completo para uma vida mais
+            </p>
+            <p className="text-gray-500 text-sm">saudável e equilibrada</p>
+          </div>
+
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-2">
             {menuItems.map((item) => (
               <Link
                 key={item.href}
@@ -65,20 +72,20 @@ export function Header() {
                 className="relative text-sm font-semibold py-7 group"
                 style={{ color: item.color }}
               >
-                <span
-                  className="block px-4 py-2 rounded-sm transition-colors duration-200"
+                {/* Fix: Add type="button" to satisfy Biome requirements */}
+                <button
+                  type="button"
+                  className="block px-2 py-2 rounded-sm transition-colors duration-200 border-none bg-transparent cursor-pointer"
                   style={{ backgroundColor: "transparent" }}
                   onMouseEnter={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      item.bgHover;
+                    (e.target as HTMLElement).style.backgroundColor = item.bgHover;
                   }}
                   onMouseLeave={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      "transparent";
+                    (e.target as HTMLElement).style.backgroundColor = "transparent";
                   }}
                 >
                   {item.name}
-                </span>
+                </button>
                 <div
                   className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2"
                   style={{ backgroundColor: item.color }}
@@ -86,24 +93,21 @@ export function Header() {
               </Link>
             ))}
             <div className="h-4 w-px bg-gray-200" />
-            <Link
-              href="/sobre"
-              className="relative text-sm font-semibold text-gray-600 py-7 group"
-            >
-              <span
-                className="block px-4 py-4 rounded-sm transition-colors duration-200"
+            <Link href="/sobre" className="relative text-sm font-semibold text-gray-600 py-7 group">
+              {/* Fix: Add type="button" to satisfy Biome requirements */}
+              <button
+                type="button"
+                className="block px-4 py-4 rounded-sm transition-colors duration-200 border-none bg-transparent cursor-pointer"
                 style={{ backgroundColor: "transparent" }}
                 onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.backgroundColor =
-                    menuColors.outros.light;
+                  (e.target as HTMLElement).style.backgroundColor = menuColors.outros.light;
                 }}
                 onMouseLeave={(e) => {
-                  (e.target as HTMLElement).style.backgroundColor =
-                    "transparent";
+                  (e.target as HTMLElement).style.backgroundColor = "transparent";
                 }}
               >
                 Sobre
-              </span>
+              </button>
               <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
             </Link>
             {session ? (
@@ -111,20 +115,20 @@ export function Header() {
                 href="/admin"
                 className="relative text-sm font-semibold text-gray-600 py-7 group"
               >
-                <span
-                  className="block px-4 py-4 rounded-sm transition-colors duration-200"
+                {/* Fix: Add type="button" to satisfy Biome requirements */}
+                <button
+                  type="button"
+                  className="block px-4 py-4 rounded-sm transition-colors duration-200 border-none bg-transparent cursor-pointer"
                   style={{ backgroundColor: "transparent" }}
                   onMouseEnter={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      menuColors.outros.light;
+                    (e.target as HTMLElement).style.backgroundColor = menuColors.outros.light;
                   }}
                   onMouseLeave={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      "transparent";
+                    (e.target as HTMLElement).style.backgroundColor = "transparent";
                   }}
                 >
                   Admin
-                </span>
+                </button>
                 <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
               </Link>
             ) : (
@@ -132,20 +136,20 @@ export function Header() {
                 href="/login"
                 className="relative text-sm font-semibold text-gray-600 py-7 group"
               >
-                <span
-                  className="block px-4 py-4 rounded-sm transition-colors duration-200"
+                {/* Fix: Add type="button" to satisfy Biome requirements */}
+                <button
+                  type="button"
+                  className="block px-4 py-4 rounded-sm transition-colors duration-200 border-none bg-transparent cursor-pointer"
                   style={{ backgroundColor: "transparent" }}
                   onMouseEnter={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      menuColors.outros.light;
+                    (e.target as HTMLElement).style.backgroundColor = menuColors.outros.light;
                   }}
                   onMouseLeave={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor =
-                      "transparent";
+                    (e.target as HTMLElement).style.backgroundColor = "transparent";
                   }}
                 >
                   Acesso
-                </span>
+                </button>
                 <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
               </Link>
             )}
@@ -155,8 +159,7 @@ export function Header() {
           <div
             className="absolute left-0 right-0 bottom-0 translate-y-full h-[20px] pointer-events-none"
             style={{
-              background:
-                "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 100%)",
+              background: "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 100%)",
             }}
           ></div>
 

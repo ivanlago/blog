@@ -58,9 +58,9 @@ export function Header() {
 
           <div className="flex flex-col">
             <p className="text-gray-500 text-sm whitespace-nowrap mr-10">
-              Seu guia completo para uma vida mais
+              Seu guia completo para uma vida
             </p>
-            <p className="text-gray-500 text-sm">saudável e equilibrada</p>
+            <p className="text-gray-500 text-sm">mais saudável e equilibrada</p>
           </div>
 
           {/* Desktop Navigation */}
@@ -108,7 +108,7 @@ export function Header() {
               >
                 Sobre
               </button>
-              <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
+              <div className="absolute bottom-[13px] left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
             </Link>
             {session ? (
               <Link
@@ -129,7 +129,7 @@ export function Header() {
                 >
                   Admin
                 </button>
-                <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
+                <div className="absolute bottom-[13px] left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
               </Link>
             ) : (
               <Link
@@ -150,7 +150,7 @@ export function Header() {
                 >
                   Acesso
                 </button>
-                <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
+                <div className="absolute bottom-[13px] left-1/2 w-[calc(100%-2rem)] h-[8px] -translate-x-1/2 bg-gray-400"></div>
               </Link>
             )}
           </nav>

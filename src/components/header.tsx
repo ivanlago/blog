@@ -8,6 +8,7 @@ import { menuColors } from "@/styles/colors";
 import { useSession } from "next-auth/react";
 import "@/styles/menu.css";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const menuItems = [
   {
@@ -65,7 +66,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-2">
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}

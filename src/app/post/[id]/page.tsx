@@ -4,6 +4,8 @@ import db from "@/db";
 import { posts, users } from "@/db/schema";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
+import { PageTransition } from "@/components/motion/page-transition";
+import { FadeIn } from "@/components/motion/fade-in";
 
 interface PostPageProps {
   params: Promise<{
@@ -45,8 +47,10 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   return (
-    <article className="container mx-auto px-4 py-8">
-      <header className="max-w-4xl mx-auto mb-8">
+    <PageTransition>
+      <article className="container mx-auto px-4 py-8">
+        <FadeIn>
+          <header className="max-w-4xl mx-auto mb-8">
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
         {post.subtitle && (
           <p className="text-xl text-gray-600 mb-4">{post.subtitle}</p>
@@ -100,6 +104,8 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         )}
       </div>
-    </article>
+        </FadeIn>
+      </article>
+    </PageTransition>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const menuItems = [
   { name: "Suplementos Naturais", href: "/categoria/suplementos-naturais" },
@@ -11,7 +14,13 @@ const menuItems = [
 export function Footer() {
   return (
     <footer className="bg-gray-50 border-t">
-      <div className="container mx-auto px-4 py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="container mx-auto px-4 py-12"
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
@@ -80,7 +89,7 @@ export function Footer() {
             reservados.
           </p>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 }

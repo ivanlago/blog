@@ -3,6 +3,9 @@ import db from "@/db";
 import { posts, categoryEnum } from "@/db/schema";
 import { PostCard } from "@/components/post-card";
 import { notFound } from "next/navigation";
+import { PageTransition } from "@/components/motion/page-transition";
+import { FadeIn } from "@/components/motion/fade-in";
+import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-container";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -52,14 +55,20 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     .orderBy(desc(posts.createdAt));
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">{title}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categoryPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+    <PageTransition>
+      <div className="container mx-auto px-4 py-8">
+        <FadeIn>
+          <h1 className="text-4xl font-bold mb-8">{title}</h1>
+        </FadeIn>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categoryPosts.map((post) => (
+            <StaggerItem key={post.id}>
+              <PostCard post={post} />
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
-    </div>
+    </PageTransition>
   );
 }
 

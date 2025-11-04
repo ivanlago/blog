@@ -9,8 +9,9 @@ import { AdvertisementForm } from "../_components/advertisement-form";
 export default async function EditAdvertisementPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const session = await getServerSession(config);
 
   if (!session?.user || session?.user?.role !== "admin") {
@@ -20,7 +21,7 @@ export default async function EditAdvertisementPage({
   const advertisement = await db
     .select()
     .from(advertisements)
-    .where(eq(advertisements.id, parseInt(params.id)))
+    .where(eq(advertisements.id, parseInt(id)))
     .limit(1);
 
   if (!advertisement.length) {
